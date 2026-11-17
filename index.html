@@ -23,52 +23,23 @@
     <div class="eyebrow">PRISA Media · Inteligencia de Negocios</div>
     <h1>Brand<br><span class="g">Pulse</span></h1>
     <p class="lead">El recuerdo de marca antes y después de una campaña, medido donde la audiencia ya interactúa.</p>
-    <div class="chips"><a class="btn" href="#video">▶ Ver en 60 s</a><a class="btn ghost" href="#resultados">Ir al tablero</a></div>
+    <div class="chips"><a class="btn" href="#s1">Cómo funciona</a><a class="btn ghost" href="#resultados">Resultados</a></div>
   </div>
   <svg class="pulse" viewBox="0 0 1200 180" preserveAspectRatio="none"><path d="M0 100H300L340 100 380 30 440 160 500 70 540 100H760L800 100 840 40 900 150 950 90 990 100H1200" fill="none" stroke="url(#gg)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="gg"><stop offset="0" stop-color="#0096DC"/><stop offset=".6" stop-color="#FD006E"/><stop offset="1" stop-color="#FFCB00"/></linearGradient></defs></svg>
 </header>
 
-<section id="video" data-t="Video"><div class="wrap">
-  <div class="eyebrow">En 60 segundos</div><h2 class="rv">Todo el <span class="g">método</span>, en un minuto.</h2>
-  <div class="video-box rv"><video controls preload="none" poster="assets/video/poster.jpg" playsinline><source src="assets/video/prisa-brand-pulse.mp4" type="video/mp4"></video></div>
-  <p class="sim">Narración con voz sintética (es-419). El guion está en <a href="assets/video/guion.txt" style="color:inherit">guion.txt</a>.</p>
-</div></section>
-
-<section id="s1" data-t="Brand Lift"><div class="wrap">
-  <div class="eyebrow"><b>01</b> Brand Lift</div>
-  <h2 class="rv">Cambiar no es <span class="g">causar</span>.</h2>
-  <div class="two">
-    <div class="rv">
-      <p class="lead">Brand Lift es el cambio en recordación <b style="color:#fff">atribuible</b> a la campaña. Para aislarlo se compara contra un grupo que no la vio.</p>
-      <div class="seg" id="ctlSeg" style="margin-top:24px"><button class="on" data-v="0">Solo antes / después</button><button data-v="1">Con grupo de control</button></div>
-      <div class="note" id="liftNote"></div>
-    </div>
-    <div class="card rv">
-      <div class="lift" id="lift"></div>
-      <div class="big" id="liftBig" style="margin-top:6px"></div>
-    </div>
-  </div>
-  <div class="two" style="margin-top:80px">
-    <div class="rv"><h3>Espontánea vs. asistida</h3><p class="lead" style="margin-top:10px;font-size:16px">Se miden por separado. Mezclarlas infla o desinfla el resultado.</p>
-      <div class="seg" id="modeSeg" style="margin-top:20px"><button class="on" data-v="esp">Espontánea</button><button data-v="asi">Asistida</button></div></div>
-    <div class="rv"><div class="phone"><div class="scr" id="qdemo" style="background:#fff;color:#111;padding:48px 18px 18px;gap:12px"></div></div></div>
-  </div>
-</div></section>
-
-<section id="s2" data-t="Brand Pulse"><div class="wrap">
-  <div class="eyebrow"><b>02</b> PRISA Brand Pulse</div>
-  <h2 class="rv">Una pregunta. <span class="g">Dos momentos.</span></h2>
-  <p class="lead rv">Una encuesta aparte llega tarde y a otra gente. Brand Pulse pone la pregunta en la historia, el chat, el live, el reproductor y el portal.</p>
-  <div class="two" style="margin-top:44px">
-    <div class="card rv" id="vsA"></div><div class="card rv" id="vsB"></div>
-  </div>
-</div></section>
-
-<section id="s3" data-t="Metodología"><div class="wrap">
-  <div class="eyebrow"><b>03</b> Metodología</div>
-  <h2 class="rv">Medir, activar, <span class="g">volver a medir</span>.</h2>
+<section id="s1" data-t="Brand Pulse"><div class="wrap">
+  <div class="eyebrow">Brand Pulse</div>
+  <h2 class="rv">PRISA <span class="g">Brand Pulse</span></h2>
+  <p class="lead rv">Mide cuánto recuerda la audiencia una marca en tres momentos, con preguntas dentro de los formatos que ya usa. Esa diferencia es el Brand Lift observado.</p>
   <div class="steps rv" id="steps"></div><div class="sp"><i id="sp"></i></div>
   <div class="panel rv"><div class="card" id="stepInfo"></div><div class="card" id="stepVis" style="display:grid;place-items:center;min-height:200px"></div></div>
+  <div class="two" style="margin-top:80px">
+    <div class="rv"><h3>Espontánea y asistida</h3><p class="lead" style="margin-top:10px;font-size:16px">Sin opciones o con opciones. Se miden por separado.</p>
+      <div class="seg" id="modeSeg" style="margin-top:20px"><button class="on" data-v="esp">Espontánea</button><button data-v="asi">Asistida</button></div>
+      <p class="sim" style="margin-top:24px;max-width:460px">Un cambio entre antes y después es un cambio observado. Atribuirlo a la campaña exige un grupo de control válido.</p></div>
+    <div class="rv"><div class="phone"><div class="scr" id="qdemo" style="background:#fff;color:#111;padding:48px 18px 18px;gap:12px"></div></div></div>
+  </div>
 </div></section>
 
 <section id="s4" data-t="Instagram"><div class="wrap"><div class="lab" id="lab-ig"></div></div></section>
@@ -76,16 +47,15 @@
 <section id="s6" data-t="TikTok Live"><div class="wrap"><div class="lab" id="lab-tt"></div></div></section>
 <section id="s7" data-t="YouTube Live"><div class="wrap"><div class="lab flip" id="lab-yt"></div></div></section>
 <section id="s8" data-t="Streaming"><div class="wrap"><div class="lab" id="lab-st"></div></div></section>
-<section id="s9" data-t="Display"><div class="wrap"><div class="lab flip" id="lab-dp"></div></div></section>
 
 <section id="resultados" data-t="Resultados"><div class="wrap">
-  <div class="eyebrow"><b>10</b> Resultados</div>
-  <h2 class="rv">El tablero.</h2>
+  <div class="eyebrow">Resultados</div>
+  <h2 class="rv">Resultados</h2>
+  <p class="lead rv" style="margin-bottom:28px">Antes, durante la campaña y 7 días después, por plataforma.</p>
   <div class="dash rv">
     <div class="dctl">
       <div class="chips" id="dPl"></div>
       <div class="seg" id="dMet"><button class="on" data-v="esp">Espontánea</button><button data-v="asi">Asistida</button></div>
-      <div class="seg" id="dView"><button class="on" data-v="obs">Observado</button><button data-v="inc">Incremental</button></div>
     </div>
     <div class="gb" id="gb"></div><div class="lbls" id="lbls"></div>
     <div class="drow" id="drow"></div>
@@ -94,19 +64,11 @@
   <p class="sim">Datos simulados del ejemplo LOS40 + Colcafé. Barras de error: margen al 95 %.</p>
 </div></section>
 
-<section id="s11" data-t="Operación"><div class="wrap">
-  <div class="eyebrow"><b>11</b> Operación</div>
-  <h2 class="rv"><span id="opN" class="g">0</span> publicaciones.<br>5 semanas.</h2>
-  <div class="seg rv" id="opSeg"><button class="on" data-v="1">Con medición día 7</button><button data-v="0">Sin día 7</button></div>
-  <div class="card rv tw" style="margin-top:26px"><table id="opT"></table></div>
-  <div class="card rv" style="margin-top:14px"><div class="gh"><div></div><div id="gHead"></div></div><div class="gantt" id="gantt"></div></div>
-</div></section>
 
 <section id="s12" data-t="Riesgos"><div class="wrap">
-  <div class="eyebrow"><b>12</b> Riesgos y recomendaciones</div>
-  <h2 class="rv">Lo que puede <span class="g">torcer</span> la lectura.</h2>
+  <div class="eyebrow">Riesgos</div>
+  <h2 class="rv">Riesgos</h2>
   <div class="rk" id="rk"></div>
-  <div class="reco" id="reco"></div>
 </div></section>
 
 <footer><div class="wrap">PRISA Brand Pulse · Ejemplo ficticio con LOS40 y Colcafé · Datos, audios y piezas simulados con fines ilustrativos. Proyecto independiente.</div></footer>
