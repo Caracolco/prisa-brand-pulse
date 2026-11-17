@@ -42,7 +42,7 @@ function step(n){
   const s=ST[n],d=P('ig').asi;
   $('#stepInfo').innerHTML=`<div class="eyebrow" style="color:${s.c}">${s.i}</div><h3 style="font-size:32px;margin:10px 0">${s.t}</h3><p style="color:var(--ink2)">${s.d}</p><div class="chip on" style="margin-top:18px;display:inline-block">${s.o}</div>`;
   const bars=[['Antes',d[0],'#0096DC',n>=0],['Durante',d[1],'#FD006E',n>=1],['7 días después',d[2],'#2fd27a',n>=2]];
-  $('#stepVis').innerHTML=`<div style="display:flex;gap:18px;align-items:flex-end;height:170px;width:100%;justify-content:center">${bars.map(b=>`<div style="text-align:center;font-size:12px;color:var(--ink2);width:84px"><div style="height:${b[3]?b[1]*2.6:4}px;background:${b[3]?b[2]:'#ffffff14'};border-radius:10px 10px 3px 3px;transition:height .8s var(--ease)"></div>${b[0]}${b[3]?`<br><b style="color:#fff;font-size:16px">${b[1]}%</b>`:''}</div>`).join('')}</div>`;
+  $('#stepVis').innerHTML=`<div style="width:100%;max-width:440px"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:end;height:180px;border-bottom:1px solid var(--line)">${bars.map(b=>`<div style="height:${b[3]?b[1]*3.2:4}px;background:${b[3]?b[2]:'#ffffff14'};border-radius:10px 10px 0 0;transition:height .8s var(--ease)"></div>`).join('')}</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;text-align:center;margin-top:10px">${bars.map(b=>`<div style="font-size:13px;color:var(--ink2);min-height:56px">${b[0]}<br><b style="color:#fff;font-size:20px">${b[3]?b[1]+'%':'&nbsp;'}</b></div>`).join('')}</div></div>`;
 }
 $('#steps').addEventListener('click',e=>{const b=e.target.closest('button');if(b){clearInterval(stp);sn=+b.dataset.i;step(sn)}});
 let sn=0,stp=setInterval(()=>{sn=(sn+1)%3;step(sn)},3800);step(0);
