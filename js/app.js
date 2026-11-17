@@ -55,60 +55,93 @@ function bindPoll(root,res){
 }
 const poll=(q,o)=>`<div class="poll"><h4>${q}</h4>${o.map(x=>`<button class="opt"><i></i><span>${x}</span><span></span></button>`).join('')}<div style="font-size:10px;color:#888;margin-top:8px;text-align:center">Toca una opción · orden aleatorio</div></div>`;
 const Q='¿Qué marca de café recuerdas haber visto esta semana?';
-const res={tt:[[30,31,24,15],[24,42,19,15]],ig:[[27,38,20,15],[21,52,15,12]],yt:[[28,35,22,15],[22,47,18,13]],st:[[27,40,20,13],[19,55,16,10]],dp:[[29,33,23,15],[26,41,20,13]]};
-const vn=(label)=>`<div class="b-in"><div class="vn"><button class="play">▶</button><div class="wv">${Array.from({length:24},(_,i)=>`<i style="height:${6+Math.abs(Math.sin(i*1.7))*16}px"></i>`).join('')}</div></div><div style="font-size:10px;opacity:.6;margin-top:3px">${label}</div></div>`;
-const bar=(w,c='var(--yellow)')=>`<div class="tr"><i style="background:${c}"></i></div>`;
+const res={ig:[[27,38,20,15],[21,52,15,12]],yt:[[28,35,22,15],[22,47,18,13]],tt:[[30,31,24,15],[24,42,19,15]]};
 const teaser=`<div class="fakevid"><div class="mic">LOS40</div><div class="cup"></div><div class="cap"><b>Los Impresentables</b> · con Colcafé</div></div>`;
-const phone=(inner,extra='')=>`<div class="phone"><div class="scr">${inner}</div></div>`;
-const rep=(a,s)=>[a,s];
-const waReplies={0:[['Camila','Café Sol, el de toda la vida'],['Andrés','Aroma Andes'],['Sofi','el que haga mi mamá jaja'],['Juan','Colcafé']],2:[['Camila','Colcafé!! lo dijeron en el programa'],['Andrés','Colcafé y Café Sol'],['Sofi','el de Los Impresentables, Colcafé'],['Juan','Aroma Andes']]};
-const _ttp={0:['Café Sol 🔥','alguien sabe qué canción es?','buenos días Bogotá','saludos desde Cali','pon reggaetón','tinto y música','un cafecito pa la mañana','Aroma Andes jaja'],2:['Colcafé para el desvelo','yo con mi colcafé ☕','qué buena la mención de Colcafé','saludos Medellín','pon reggaetón','tinto y música','café sol siempre','buenos días'],1:['jajaja los impresentables','qué risa','colcafé en el programa!','🔥🔥🔥','saludos','el locutor está durísimo']};
+const phone=inner=>`<div class="phone"><div class="scr">${inner}</div></div>`;
+const hl=t=>t.replace(/(colcaf[eé])/ig,'<mark>$1</mark>');
+const USERS=['sofi','andres_m','cami','dj_jota','lau','mateo','vale'];
+const POOL={
+ tt:{0:['Café Sol 🔥','alguien sabe qué canción es?','buenos días Bogotá','saludos desde Cali','pon reggaetón','tinto y música','Aroma Andes jaja','Colcafé siempre','el café de mi casa es el de la tienda','qué sueño'],
+     2:['Colcafé para el desvelo','yo con mi colcafé ☕','Café Sol, el de siempre','saludos Medellín','colcafé y rumba','tinto y música','buenos días','Aroma Andes','qué buena la mención de Colcafé','pon reggaetón']},
+ yt:{0:['hola Bogotá','saludos desde Cali','Café Sol 🔥','esa canción 🔥','Colcafé, el de la casa','buen programa','tinto sin azúcar','Aroma Andes','👏👏','buenos días'],
+     2:['Colcafé en el programa!','hola Bogotá','yo tomo colcafé ☕','Café Sol siempre','esa canción 🔥','colcafé y Los Impresentables','buen programa','Aroma Andes','saludos desde Cali','👏👏']}};
+function stream(host,pool,counter,ms=850,max=9){
+  let k=0,n=0,h=0;clearInterval(host._t);
+  host._t=setInterval(()=>{
+    if(!document.body.contains(host)){clearInterval(host._t);return}
+    const t=pool[k%pool.length],u=USERS[k%USERS.length];k++;n++;const hit=/colcaf/i.test(t);if(hit)h++;
+    host.insertAdjacentHTML('beforeend',`<div class="${hit?'hit':''}"><b>${u}</b>${t}</div>`);
+    if(host.children.length>max)host.firstChild.remove();
+    if(counter)counter.textContent=`Colcafé en ${h} de ${n} comentarios`;
+  },ms);
+}
+/* radio */
+const RSUB={
+ esp:[['Los Impresentables quieren saber de ustedes.','Escríbannos por WhatsApp al +57 300 000 0000.','¿Qué marcas de café se les vienen a la cabeza?','Los mejores mensajes salen al aire.'],
+      ['Los Impresentables llegan con Colcafé.','Arranca la mañana con el café de siempre.','Cuña de 9 s · 6 emisiones en la semana.'],
+      ['Seguimos con la pregunta del día.','¿Qué marca de café recuerdan haber escuchado hoy en el programa?','Escríbannos por WhatsApp al +57 300 000 0000.']],
+ asi:[['Una pregunta rápida, desde su WhatsApp.','¿Qué marca de café recuerdan haber escuchado esta semana?','Respondan: 1 Café Sol, 2 Colcafé, 3 Aroma Andes, 4 Otra.'],
+      ['Los Impresentables llegan con Colcafé.','Arranca la mañana con el café de siempre.','Cuña de 9 s · 6 emisiones en la semana.'],
+      ['La misma pregunta de la semana pasada.','¿Qué marca de café recuerdan haber escuchado?','Respondan 1, 2, 3 o 4 por WhatsApp.']]};
+const RMSG={
+ esp:{0:[['Camila','Café Sol, el de toda la vida','Otra marca'],['Andrés','Aroma Andes','Otra marca'],['Sofi','el que haga mi mamá jaja','Sin marca'],['Juan','Colcafé','Colcafé']],
+      2:[['Camila','Colcafé!! lo dijeron en el programa','Colcafé'],['Andrés','Colcafé y Café Sol','Colcafé'],['Sofi','el de Los Impresentables, Colcafé','Colcafé'],['Juan','Aroma Andes','Otra marca']]},
+ asi:{0:[['Camila','1','Café Sol'],['Andrés','2','Colcafé'],['Sofi','4','Otra'],['Juan','2','Colcafé']],
+      2:[['Camila','2','Colcafé'],['Andrés','2','Colcafé'],['Sofi','3','Aroma Andes'],['Juan','2','Colcafé']]}};
+const RADIO_SVG=`<svg class="rsvg" viewBox="0 -14 240 190" width="230" aria-hidden="true"><line x1="150" y1="34" x2="192" y2="6" stroke="#FFCB00" stroke-width="5" stroke-linecap="round"/><path class="w1" d="M202 -2q10 8 0 16" fill="none" stroke="#FFCB00" stroke-width="4" stroke-linecap="round"/><path class="w2" d="M212 -10q16 14 0 28" fill="none" stroke="#FFCB00" stroke-width="4" stroke-linecap="round"/><rect x="10" y="34" width="200" height="132" rx="24" fill="#1b222b" stroke="#FFCB00" stroke-width="5"/><circle cx="72" cy="100" r="42" fill="#0a0c10" stroke="#ffffff30" stroke-width="3"/><circle class="sp" cx="72" cy="100" r="28" fill="none" stroke="#FFCB00" stroke-width="3"/><circle class="sp s2" cx="72" cy="100" r="15" fill="none" stroke="#FD006E" stroke-width="3"/><circle cx="72" cy="100" r="5" fill="#FFCB00"/><rect x="132" y="62" width="64" height="26" rx="7" fill="#0a0c10"/><text x="164" y="81" text-anchor="middle" fill="#FFCB00" font-family="Inter,sans-serif" font-weight="900" font-size="15">LOS40</text><circle cx="148" cy="130" r="13" fill="#FD006E"/><circle cx="186" cy="130" r="13" fill="#0096DC"/></svg>`;
 const LABS={
- ig:{num:'04',title:'Instagram',lead:'Historia asistida antes. Contenido de Colcafé en Los Impresentables durante. La misma historia después del contenido.',ac:'#FD006E',
+ ig:{title:'Instagram',lead:'Historia asistida antes. Contenido de Colcafé en Los Impresentables durante. La misma historia después del contenido.',ac:'#FD006E',
   st:[['Antes','Historia asistida'],['Durante','Contenido de la campaña'],['Después','Historia asistida']],
   r:(i,box)=>{
     if(i==1){box.innerHTML=phone(`<div class="prog"><i id="pg"></i></div><div class="s-top"><div class="av">L40</div>los40co · Reel</div>${teaser}`);setTimeout(()=>{const p=$('#pg');if(p){p.style.transition='width 8s linear';p.style.width='100%'}},60)}
-    else{box.innerHTML=phone(`<div class="prog"><i style="width:35%"></i></div><div class="s-top"><div class="av">L40</div>los40co · ${i?'hoy':'hace 7 días'}</div><div class="story">${poll(Q,brands.map((b,k)=>b))}</div>`);bindPoll($('.poll',box),res.ig[i/2|0])}}},
- radio:{num:'05',title:'Radio',lead:'Pregunta por WhatsApp. Cuña o mención de Colcafé. Nueva pregunta durante el programa.',ac:'#FFCB00',
-  st:[['Antes','Pregunta por WhatsApp'],['Durante','Cuña al aire'],['Después','Nueva pregunta']],
-  r:(i,box)=>{
-    if(i==1){box.innerHTML=phone(`<div class="dial"><div style="font-size:11px;letter-spacing:.2em;color:var(--ink3)">EN VIVO</div><div class="fm">LOS40</div><div class="wv" id="rw" style="height:50px;width:70%">${Array.from({length:30},(_,k)=>`<i style="height:${10+Math.abs(Math.sin(k*1.3))*40}px;background:#FFCB00"></i>`).join('')}</div><button class="btn" id="rp" style="background:var(--yellow)">▶ Escuchar cuña</button><div style="font-size:11px;color:var(--ink3)">9 s · audio ficticio</div></div>`);
-      $('#rp').onclick=()=>{$('#rw').classList.add('playing');playAudio('assets/audio/cuna_radio.mp3',()=>$('#rw').classList.remove('playing'))}}
-    else{box.innerHTML=phone(`<div class="wa"><div class="hd"><div class="av">L40</div>Los Impresentables</div><div class="msgs" id="msgs">${vn(i?'Pregunta del día · 9:42':'Pregunta · 7:15')}</div></div>`);
-      const m=$('#msgs');$('.play',m).onclick=()=>{const b=$('.vn',m);b.classList.add('playing');playAudio(i?'assets/audio/pregunta_post.mp3':'assets/audio/pregunta_whatsapp.mp3',()=>{b.classList.remove('playing');waReplies[i].forEach((r,k)=>setTimeout(()=>{m.insertAdjacentHTML('beforeend',`<div class="b-out"><b style="font-size:10px;opacity:.7">${r[0]}</b><br>${r[1]}</div>`)},k*650))})}}}},
- tt:{num:'06',title:'TikTok Live',lead:'Pregunta asistida en el live antes. Contenido de Colcafé durante. La misma pregunta después del contenido.',ac:'#2fd27a',
-  st:[['Antes','Pregunta asistida'],['Durante','Contenido de la campaña'],['Después','Pregunta asistida']],
-  r:(i,box)=>{
-    if(i==1)box.innerHTML=phone(`<div class="tt"><div class="live">● LIVE</div><div style="position:absolute;top:70px;left:10px;right:10px;bottom:70px;border-radius:14px;overflow:hidden;display:flex">${teaser}</div></div>`);
-    else{box.innerHTML=phone(`<div class="tt"><div class="live">● LIVE</div><div style="padding:0 14px 40px">${poll(Q,brands)}</div></div>`);bindPoll($('.poll',box),res.tt[i/2|0])}}},
- yt:{num:'07',title:'YouTube Live',lead:'Encuesta nativa de selección múltiple antes. Contenido de Colcafé durante. La misma encuesta después.',ac:'#ff5a3c',
-  st:[['Antes','Encuesta nativa'],['Durante','Colcafé en la transmisión'],['Después','Misma encuesta']],
-  r:(i,box)=>{
-    const chat=['👏👏','buen programa','saludos desde Cali','esa canción 🔥','hola Bogotá'].map(t=>`<div><b style="color:#aaa">user</b> ${t}</div>`).join('');
-    box.innerHTML=`<div class="yt"><div class="v"><div class="mic" style="width:70px;height:70px;font-size:12px">LOS40</div><div style="position:absolute;top:10px;left:10px;background:#f00;font-size:10px;font-weight:800;padding:2px 6px;border-radius:4px">● EN VIVO</div>${i==1?'<div class="cup" style="bottom:14px"></div><div class="cap" style="right:70px">Los Impresentables · <b>Colcafé</b></div>':`<div class="poll"><h4 style="font-size:13px;margin-bottom:6px">${Q}</h4>${brands.map(b=>`<button class="opt"><i></i><span>${b}</span><span></span></button>`).join('')}</div>`}</div><div class="chat">${chat}</div></div>`;
-    if(i!=1)bindPoll($('.poll',box),res.yt[i/2|0])}},
- st:{num:'08',title:'Streaming',lead:'Preroll de audio y pregunta dentro del reproductor.',ac:'#0096DC',
-  st:[['Antes','Pregunta en el player'],['Durante','Preroll de audio'],['Después','Pregunta tras el anuncio']],
-  r:(i,box)=>{
-    const art=`<div class="art">LOS40</div><div><b>Radio en vivo</b><div style="font-size:12px;color:var(--ink3)">LOS40 Colombia</div></div>`;
-    if(i==1){box.innerHTML=phone(`<div class="pl">${art}<div class="ad"><b>Anuncio · Colcafé</b><div class="tr" style="margin:8px 0"><i id="ap"></i></div><button class="btn" id="pp" style="padding:9px 16px;font-size:13px">▶ Escuchar preroll</button></div><div style="font-size:11px;color:var(--ink3)">Preroll de 11 s · audio ficticio</div></div>`);
-      $('#pp').onclick=()=>playAudio('assets/audio/preroll_colcafe.mp3',()=>{$('#ap').style.width='100%'},null,f=>{$('#ap').style.width=f*100+'%'})}
-    else{box.innerHTML=phone(`<div class="pl">${art}${poll(Q,brands)}</div>`);bindPoll($('.poll',box),res.st[i/2|0])}}}
+    else{box.innerHTML=phone(`<div class="prog"><i style="width:35%"></i></div><div class="s-top"><div class="av">L40</div>los40co · ${i?'hoy':'hace 7 días'}</div><div class="story">${poll(Q,brands)}</div>`);bindPoll($('.poll',box),res.ig[i/2|0])}}},
+ radio:{title:'Radio',lead:'Convocatoria al aire, mensajes por WhatsApp y la misma pregunta después. Abierta (espontánea) y con opciones (asistida).',ac:'#FFCB00',
+  st:[['Antes','Convocatoria al aire'],['Durante','Mención de Colcafé'],['Después','Misma convocatoria']],
+  r:(i,box,mode)=>{
+    const subs=RSUB[mode][i],msgs=i==1?null:RMSG[mode][i];
+    box.innerHTML=`<div class="rad"><div class="rcard">${RADIO_SVG}<div class="rcap" id="rcap"></div><div class="rdots">${subs.map(()=>'<i></i>').join('')}</div></div>
+     <div class="wapanel"><div class="wahd">${i==1?'Qué buscamos':'Mensajes por WhatsApp · lo que buscamos'}</div><div class="wam" id="wam"></div>
+     <div class="lg">${mode=='esp'?'<span>Mención de Colcafé sin ayuda</span><span>Primera marca nombrada</span>':'<span>Opción elegida (1–4)</span><span>Una respuesta por persona</span>'}</div></div></div>`;
+    const cap=$('#rcap',box),dots=$$('.rdots i',box);let k=0;
+    const show=()=>{cap.style.animation='none';cap.offsetWidth;cap.style.animation='';cap.textContent=subs[k];dots.forEach((d,x)=>d.classList.toggle('on',x===k))};
+    show();clearInterval(box._t);box._t=setInterval(()=>{if(!document.body.contains(cap)){clearInterval(box._t);return}k=(k+1)%subs.length;show()},3200);
+    if(msgs){const w=$('#wam',box);msgs.forEach((m,x)=>setTimeout(()=>{if(!document.body.contains(w))return;w.insertAdjacentHTML('beforeend',`<div class="b-out"><span><b>${m[0]}</b> ${hl(m[1])}</span><em class="${m[2]==='Colcafé'?'y':''}">${m[2]}</em></div>`)},700+x*900))}
+    else $('#wam',box).innerHTML='<div class="b-in" style="max-width:100%">Los mensajes se miden en las ventanas de antes y después, no durante la mención.</div>'}},
+ tt:{title:'TikTok Live',lead:'Pregunta asistida en el live y comentarios del chat (espontánea), antes y después del contenido de Colcafé.',ac:'#2fd27a',
+  st:[['Antes','Asistida + comentarios'],['Durante','Contenido de la campaña'],['Después','Asistida + comentarios']],
+  r:(i,box,mode)=>{
+    if(i==1){box.innerHTML=phone(`<div class="tt"><div class="live">● LIVE</div><div style="position:absolute;top:70px;left:10px;right:10px;bottom:70px;border-radius:14px;overflow:hidden;display:flex">${teaser}</div></div>`);return}
+    if(mode=='asi'){box.innerHTML=phone(`<div class="tt"><div class="live">● LIVE</div><div style="padding:0 14px 40px">${poll(Q,brands)}</div></div>`);bindPoll($('.poll',box),res.tt[i/2|0])}
+    else{box.innerHTML=phone(`<div class="tt"><div class="live">● LIVE</div><div class="cnt" id="cnt"></div><div style="position:absolute;top:92px;left:14px;right:14px;text-align:center;font-weight:900;font-size:21px;letter-spacing:-.02em;line-height:1.1">${i?'¿Qué marca de café recuerdas haber visto esta semana?':'¿Qué café tomas en la mañana?'}<div style="font-size:11px;font-weight:600;color:#ffffffa0;margin-top:6px">Escríbelo en el chat</div></div><div class="cm" id="cm"></div></div>`);stream($('#cm',box),POOL.tt[i],$('#cnt',box))}}},
+ yt:{title:'YouTube Live',lead:'Encuesta nativa de selección múltiple y comentarios del chat (espontánea), antes y después del contenido de Colcafé.',ac:'#ff5a3c',
+  st:[['Antes','Encuesta + comentarios'],['Durante','Contenido de la campaña'],['Después','Encuesta + comentarios']],
+  r:(i,box,mode)=>{
+    const esp=mode=='esp'&&i!=1;
+    const live='<div style="position:absolute;top:10px;left:10px;background:#f00;font-size:10px;font-weight:800;padding:2px 6px;border-radius:4px">● EN VIVO</div>';
+    const chat='<div class="chat" id="chat">'+(esp?'':['👏👏','buen programa','saludos desde Cali','esa canción 🔥','hola Bogotá'].map(t=>`<div><b>user</b> ${t}</div>`).join(''))+'</div>';
+    let v;
+    if(i==1)v=`<div class="mic" style="width:70px;height:70px;font-size:12px">LOS40</div>${live}<div class="cup" style="bottom:14px"></div><div class="cap" style="right:70px">Los Impresentables · <b>Colcafé</b></div>`;
+    else if(esp)v=`<div class="mic" style="width:70px;height:70px;font-size:12px">LOS40</div>${live}<div class="cnt" id="cnt" style="top:10px;right:10px;left:auto"></div><div class="cap" style="bottom:12px;font-size:13px;text-align:center"><b>${i?'¿Qué marca de café recuerdas haber visto esta semana?':'¿Qué café tomas en la mañana?'}</b><br>Escríbelo en el chat</div>`;
+    else v=`<div class="mic" style="width:70px;height:70px;font-size:12px">LOS40</div>${live}<div class="poll"><h4 style="font-size:13px;margin-bottom:6px">${Q}</h4>${brands.map(b=>`<button class="opt"><i></i><span>${b}</span><span></span></button>`).join('')}</div>`;
+    box.innerHTML=`<div class="yt ${esp?'esp':''}"><div class="v">${v}</div>${chat}</div>`;
+    if(i!=1&&!esp)bindPoll($('.poll',box),res.yt[i/2|0]);
+    if(esp)stream($('#chat',box),POOL.yt[i],$('#cnt',box),800,12)}}
 };
 Object.entries(LABS).forEach(([id,c])=>{
-  const d=P(id),m=d.asi?'asi':'esp',n=d.n;
-  const el=$('#lab-'+id);
+  const d=P(id),mets=[['esp','Espontánea'],['asi','Asistida']].filter(m=>d[m[0]]);
+  const el=$('#lab-'+id);let mode=d.asi?'asi':'esp',stage=0;
   el.innerHTML=`<div class="rv"><div class="eyebrow">${c.title}</div><h2>${c.title}</h2><p class="lead">${c.lead}</p>
-   <div class="chips" style="margin-top:16px">${d.esp?'<span class="chip">Espontánea</span>':''}${d.asi?'<span class="chip">Asistida</span>':''}</div>
+   <div class="chips" style="margin-top:16px">${mets.map(m=>`<span class="chip">${m[1]}</span>`).join('')}</div>
    <div class="flow">${c.st.map((s,i)=>`<button style="--ac:${c.ac}" data-i="${i}"><small>${s[0]}</small><b>${s[1]}</b></button>`).join('')}</div>
-   <div class="kpis"><div><b>${d[m][0]}% → <em style="color:${c.ac};font-style:normal">${d[m][1]}%</em></b><span>${m=='asi'?'asistida':'espontánea'} · antes → después</span></div><div><b>${fmt(n[1])}</b><span>respuestas posteriores</span></div></div>
-   <p class="sim">Simulación. Datos ficticios.</p></div><div class="stage rv" id="st-${id}"></div>`;
+   <div class="kpis">${mets.map(m=>`<div><b>${d[m[0]][0]}% → <em style="color:${c.ac};font-style:normal">${d[m[0]][1]}%</em></b><span>${m[1]} · antes → durante</span></div>`).join('')}<div><b>${fmt(d.n[1])}</b><span>respuestas durante la campaña</span></div></div>
+   <p class="sim">Simulación. Datos ficticios.</p></div>
+   <div class="stage rv" style="flex-direction:column;align-items:center;gap:18px">${mets.length>1?`<div class="seg" id="md-${id}">${mets.map(m=>`<button data-v="${m[0]}" class="${m[0]===mode?'on':''}">${m[1]}</button>`).join('')}</div>`:''}<div id="st-${id}" style="width:100%;display:flex;justify-content:center"></div></div>`;
   watch(el);
-  const box=$('#st-'+id);
-  const go=i=>{stopAudio();$$('.flow button',el).forEach((b,k)=>b.classList.toggle('on',k===i));c.r(i*(id==='ig'||id==='yt'||id==='st'||id==='dp'?1:1),box);if(id==='ig'&&i==0){}};
-  // stage index -> res index: 0 previa,2 posterior
-  el.querySelector('.flow').addEventListener('click',e=>{const b=e.target.closest('button');if(b)go(+b.dataset.i)});
-  go(0);
+  const box=$('#st-'+id),md=$('#md-'+id);
+  const go=()=>{$$('.flow button',el).forEach((b,k)=>b.classList.toggle('on',k===stage));if(md)md.style.visibility=stage==1&&id!=='radio'?'hidden':'visible';c.r(stage,box,mode)};
+  $('.flow',el).addEventListener('click',e=>{const b=e.target.closest('button');if(b){stage=+b.dataset.i;go()}});
+  if(md)md.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;mode=b.dataset.v;$$('button',md).forEach(x=>x.classList.toggle('on',x===b));go()});
+  go();
 });
 /* ---------- 10 dashboard ---------- */
 let dp='all',dm='esp';

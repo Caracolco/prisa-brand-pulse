@@ -13,9 +13,8 @@ GitHub Pages: Settings → Pages → Deploy from branch `main` / root.
 
 ## Contenido
 - `index.html`, `css/`, `js/` — la web. Los datos del tablero están en `js/data.js`.
-- `assets/audio/` — preroll, cuña y notas de voz ficticias.
 - `assets/video/` — video de 60 s (1280×720), subtitulado y sin locución; texto en `subtitulos.txt`. El video es independiente de la web.
-- `tools/` — regenerar audios y video: `python3 tools/gen_audio.py`, `node tools/render_video.js <dir>` y luego `ffmpeg` (requiere numpy, espeak-ng, ffmpeg y Playwright).
+- `tools/` — regenerar música y video: `node tools/render_video.js <dir>` y luego `ffmpeg` (requiere numpy, espeak-ng, ffmpeg y Playwright).
 
 ## Notas
 - El video usa subtítulos y música original sintetizada con código (`tools/gen_music.py`).
